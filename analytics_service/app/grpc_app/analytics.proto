@@ -1,0 +1,90 @@
+syntax = "proto3";
+package analytics;
+
+message GetTimelineAllRequest {
+    string user_id = 1;
+}
+
+message GetTimelineProjectRequest {
+    string user_id = 1;
+    string project_id = 2;
+}
+
+message GetTimelineAllMineRequest {
+    string user_id = 1;
+}
+
+message GetTimelineProjectMineRequest {
+    string user_id = 1;
+    string project_id = 2;
+}
+
+message TaskInfo {
+    string task_name = 1;
+    string project_name = 2;
+    string start_date = 3;
+    string end_date = 4;
+}
+
+message TimelineResponse {
+    repeated TaskInfo tasks = 1;
+}
+
+
+
+message GetTasksCompletedByUserRequest {
+    string project_id = 1;
+}
+
+message UserTasks {
+    string user_id = 1;
+    string full_name = 2;
+    repeated string completed_tasks = 3;
+}
+
+message TasksCompletedByUserResponse {
+    repeated UserTasks user_task = 1;
+}
+
+
+
+message GetTasksStatusInSprintsRequest {
+    string project_id = 1;
+}
+
+message SprintInfo {
+    string sprint_id = 1;
+    string name = 2;
+    repeated string completed_tasks = 3;
+    repeated string uncompleted_tasks = 4;
+}
+
+message TasksStatusInSprintsResponse {
+    repeated SprintInfo sprints = 1;
+}
+
+
+
+message GetTasksProgressByDayRequest {
+    string project_id = 1;
+}
+
+message DayInfo {
+    string day = 1;
+    repeated string tasks = 2;
+}
+
+message TasksProgressByDayResponse {
+    repeated DayInfo days = 1;
+}
+
+
+service AnalyticsService {
+    rpc GetTimelineAll (GetTimelineAllRequest) returns (TimelineResponse);
+    rpc GetTimelineProject (GetTimelineProjectRequest) returns (TimelineResponse);
+    rpc GetTimelineAllMine (GetTimelineAllMineRequest) returns (TimelineResponse);
+    rpc GetTimelineProjectMine (GetTimelineProjectMineRequest) returns (TimelineResponse);
+    rpc GetTasksCompletedByUser (GetTasksCompletedByUserRequest) returns (TasksCompletedByUserResponse);
+    rpc GetTasksStatusInSprints (GetTasksStatusInSprintsRequest) returns (TasksStatusInSprintsResponse);
+    rpc GetTasksProgressByDay (GetTasksProgressByDayRequest) returns (TasksProgressByDayResponse);
+}

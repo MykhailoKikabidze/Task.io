@@ -1,0 +1,96 @@
+syntax = "proto3";
+package task;
+
+//Get task
+
+message GetTaskRequest {
+    string id = 1;
+}
+
+message TaskResponse {
+    string id = 1;
+    string title = 2;
+    string description = 3;
+    int32 priority = 4;
+    string type = 5;
+    string status = 6;
+    string assigned_to = 7;
+    string epic_id = 8;
+    string sprint_id = 9;
+    string project_id = 10;
+    string start_date = 11;
+    string end_date = 12;
+}
+
+//Get project, sprint, epic tasks
+
+message GetProjectTasksRequest {
+    string project_id = 1;
+}
+
+message GetSprintTasksRequest {
+    string sprint_id = 1;
+}
+
+message GetEpicTasksRequest {
+    string epic_id = 1;
+}
+
+message TasksResponse {
+    repeated TaskResponse tasks = 1;
+}
+
+//Create task
+
+message CreateTaskRequest {
+    string title = 1;
+    string description = 2;
+    int32 priority = 3;
+    string type = 4;
+    string assigned_to = 5;
+    string epic_id = 6;
+    string sprint_id = 7;
+    string project_id = 8;
+    string start_date = 9;
+    string end_date = 10;
+}
+
+//Update task
+
+message UpdateTaskRequest {
+    string id = 1;
+    string title = 2;
+    string description = 3;
+    int32 priority = 4;
+    string type = 5;
+    string status = 6;
+    string assigned_to = 7;
+    string epic_id = 8;
+    string sprint_id = 9;
+    string project_id = 10;
+    string start_date = 11;
+    string end_date = 12;
+}
+
+//Delete task
+
+message DeleteTaskRequest {
+    string id = 1;
+}
+
+message DeleteTaskResponse {
+    int32 status = 1;
+    string message = 2;
+}
+
+
+
+service TaskService {
+    rpc GetTask (GetTaskRequest) returns (TaskResponse);
+    rpc GetProjectTasks (GetProjectTasksRequest) returns (TasksResponse);
+    rpc GetSprintTasks (GetSprintTasksRequest) returns (TasksResponse);
+    rpc GetEpicTasks (GetEpicTasksRequest) returns (TasksResponse);
+    rpc CreateTask (CreateTaskRequest) returns (TaskResponse);
+    rpc UpdateTask (UpdateTaskRequest) returns (TaskResponse);
+    rpc DeleteTask (DeleteTaskRequest) returns (DeleteTaskResponse);
+}

@@ -1,0 +1,252 @@
+syntax = "proto3";
+package project;
+
+// Create project
+
+message UserRole {
+    string id = 1;
+    string role = 2;
+}
+
+message CreateProjectRequest {
+    string name = 1;
+    string description = 2;
+    string color = 3;
+    string img_url = 4;
+    string type = 5;
+    repeated UserRole users = 6;
+}
+
+message ProjectResponse {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    string color = 4;
+    string img_url = 5;
+    string type = 6;
+}
+
+// Read project
+
+message GetProjectRequest {
+    string project_id = 1;
+}
+
+// Update project
+
+message UpdateProjectRequest {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    string color = 4;
+    string type = 5;
+}
+
+message UpdateProjectImgRequest {
+    string id = 1;
+    string img_url = 2;
+}
+
+message UpdateProjectUsersRequest {
+    string id = 1;
+    repeated UserRole users = 2;
+}
+
+message UpdateProjectUsersResponse {
+    string id = 1;
+    repeated UserRole users = 2;
+}
+
+// Delete project
+
+message DeleteProjectRequest {
+    string id = 1;
+}
+
+message DeleteProjectResponse {
+    int32 status = 1;
+    string message = 2;
+}
+
+// Get user projects
+
+message GetUserProjectsRequest {
+    string user_id = 1;
+}
+
+message UserProjectsResponse {
+    repeated ProjectResponse projects = 1;
+}
+
+// Get project users
+
+message UserInfo {
+    string user_id = 1;
+    string email = 2;
+    string name = 3;
+    string surname = 4;
+    string img_url = 5;
+    string role = 6;
+}
+
+message GetProjectUsersRequest {
+    string project_id = 1;
+}
+
+message ProjectUsersResponse {
+    repeated UserInfo users = 1;
+}
+
+
+
+
+
+
+// Get sprint
+
+message GetSprintRequest {
+    string id = 1;
+}
+
+message SprintResponse {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    string start_date = 4;
+    string end_date = 5;
+    bool is_started = 6;
+    string project_id = 7;
+}
+
+// Get project sprints
+
+message GetProjectSprintsRequest {
+    string project_id = 1;
+}
+
+message ProjectSprintsResponse {
+    repeated SprintResponse sprints = 1;
+}
+
+// Create sprint
+
+message CreateSprintRequest {
+    string name = 1;
+    string description = 2;
+    string start_date = 3;
+    string end_date = 4;
+    bool is_started = 5;
+    string project_id = 6;
+    repeated string tasks = 7;
+}
+
+// Update sprint
+
+message UpdateSprintRequest {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    string start_date = 4;
+    string end_date = 5;
+    bool is_started = 6;
+    string project_id = 7;
+    repeated string tasks = 8;
+}
+
+// Delete sprint
+
+message DeleteSprintRequest {
+    string id = 1;
+}
+
+message DeleteSprintResponse {
+    int32 status = 1;
+    string message = 2;
+}
+
+// Get epic
+
+message GetEpicRequest {
+    string id = 1;
+}
+
+message EpicResponse {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    int32 priority = 4;
+    string start_date = 5;
+    string end_date = 6;
+    string project_id = 7;
+}
+
+// Get project epics
+
+message GetProjectEpicsRequest {
+    string project_id = 1;
+}
+
+message ProjectEpicsResponse {
+    repeated EpicResponse epics = 1;
+}
+
+// Create epic
+
+message CreateEpicRequest {
+    string name = 1;
+    string description = 2;
+    int32 priority = 3;
+    string start_date = 4;
+    string end_date = 5;
+    string project_id = 6;
+    repeated string tasks = 7;
+}
+
+// Update epic
+
+message UpdateEpicRequest {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    int32 priority = 4;
+    string start_date = 5;
+    string end_date = 6;
+    string project_id = 7;
+    repeated string tasks = 8;
+}
+
+// Delete epic
+
+message DeleteEpicRequest {
+    string id = 1;
+}
+
+message DeleteEpicResponse {
+    int32 status = 1;
+    string message = 2;
+}
+
+
+
+service ProjectService {
+    rpc CreateProject (CreateProjectRequest) returns (ProjectResponse);
+    rpc GetProject (GetProjectRequest) returns (ProjectResponse);
+    rpc UpdateProject (UpdateProjectRequest) returns (ProjectResponse);
+    rpc UpdateProjectImg (UpdateProjectImgRequest) returns (ProjectResponse);
+    rpc UpdateProjectUsers (UpdateProjectUsersRequest) returns (UpdateProjectUsersResponse);
+    rpc DeleteProject (DeleteProjectRequest) returns (DeleteProjectResponse);
+    rpc GetUserProjects (GetUserProjectsRequest) returns (UserProjectsResponse);
+    rpc GetProjectUsers (GetProjectUsersRequest) returns (ProjectUsersResponse);
+
+    rpc GetSprint (GetSprintRequest) returns (SprintResponse);
+    rpc GetProjectSprints (GetProjectSprintsRequest) returns (ProjectSprintsResponse);
+    rpc CreateSprint (CreateSprintRequest) returns (SprintResponse);
+    rpc UpdateSprint (UpdateSprintRequest) returns (SprintResponse);
+    rpc DeleteSprint (DeleteSprintRequest) returns (DeleteSprintResponse);
+
+    rpc GetEpic (GetEpicRequest) returns (EpicResponse);
+    rpc GetProjectEpics (GetProjectEpicsRequest) returns (ProjectEpicsResponse);
+    rpc CreateEpic (CreateEpicRequest) returns (EpicResponse);
+    rpc UpdateEpic (UpdateEpicRequest) returns (EpicResponse);
+    rpc DeleteEpic (DeleteEpicRequest) returns (DeleteEpicResponse);
+}
