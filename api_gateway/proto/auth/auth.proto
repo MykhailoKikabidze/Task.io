@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+package auth;
+
+message CreateUserRequest {
+    string name = 1;
+    string surname = 2;
+    string email = 3;
+    string password = 4;
+    string img_url = 5;
+}
+
+message LoginUserRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message GetUserRequest {
+    string user_id = 1;
+}
+
+message UpdateUserRequest {
+    string name = 1;
+    string surname = 2;
+    string email = 3;
+    string password = 4;
+}
+
+message UpdateUserImageRequest {
+    string email = 1;
+    string img_url = 2;
+}
+
+message DeleteUserRequest {
+    string email = 1;
+}
+
+message MessageResponse {
+    int32 status = 1;
+    string message = 2;
+}
+
+message UserResponse {
+    string message = 1;
+    string user_id = 2;
+    string email = 3;
+    string name = 4;
+    string surname = 5;
+    string img_url = 6;
+}
+
+message SearchUsersRequest {
+    string substr = 1;
+}
+
+message UserInfo {
+    string user_id = 1;
+    string name = 2;
+    string surname = 3;
+    string email = 4;
+}
+
+message SearchUsersResponse {
+    repeated UserInfo users = 1;
+}
+
+message InitDBRequest {
+    int32 num = 1;
+}
+
+message InitDBResponse {
+    int32 status = 1;
+}
+
+service AuthService {
+    rpc CreateUser (CreateUserRequest) returns (UserResponse);
+    rpc LoginUser (LoginUserRequest) returns (UserResponse);
+    rpc GetUser (GetUserRequest) returns (UserResponse);
+    rpc UpdateUser (UpdateUserRequest) returns (UserResponse);
+    rpc UpdateUserImage (UpdateUserImageRequest) returns (UserResponse);
+    rpc DeleteUser (DeleteUserRequest) returns (MessageResponse);
+    rpc SearchUsers (SearchUsersRequest) returns (SearchUsersResponse);
+    rpc InitDB (InitDBRequest) returns (InitDBResponse);
+}
